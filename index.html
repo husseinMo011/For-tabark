@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>I Love You Heart - Tabark</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ff1e56; 
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #heart-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+        .text-point {
+            position: absolute;
+            white-space: nowrap;
+            transform-origin: center;
+            animation: pulsate 1.5s infinite ease-in-out;
+            opacity: 0.8;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        #center-name {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            font-weight: bold;
+            color: #fff; 
+            text-shadow: 0 0 10px #ff1e56, 0 0 20px #ff1e56;
+            z-index: 10;
+        }
+
+        /* FIX 3: Closed the CSS comment properly */
+        #bottom-text {
+            position: absolute;
+            bottom: -150px; 
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+        }
+
+        .sub-text-1 {
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 0 0 8px #ff1e56, 0 0 15px #ff1e56;
+            display: block;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .sub-text-2 {
+            font-size: 16px;
+            color: #fff;
+            text-shadow: 0 0 5px #ff1e56;
+            opacity: 0.8;
+            display: block;
+            font-style: italic;
+        }
+
+        @keyframes pulsate {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="heart-container">
+    <div id="center-name">Tabark</div>
+
+    <div id="bottom-text">
+        <span class="sub-text-1">roses 🥀 violets is blue 💙</span>
+        <span class="sub-text-2">nobody is gonna love you the way i do</span>
+    </div>
+</div>
+
+<script>
+    const container = document.getElementById('heart-container');
+    const textToRepeat = "I Love You ";
+    const numberOfPoints = 120; 
+    const radius = 17; 
+
+    function getHeartPoint(t, r) {
+        // FIX 1: Added missing * multiplication operator
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+        return { x: x * r, y: -y * r };
+    }
+
+    for (let i = 0; i < numberOfPoints; i++) {
+        const t = (i / numberOfPoints) * Math.PI * 2;
+        const point = getHeartPoint(t, radius);
+
+        const textSpan = document.createElement('span');
+        textSpan.className = 'text-point';
+        textSpan.innerText = textToRepeat;
+
+        // FIX 2: Changed regular quotes to backticks for template literals
+        textSpan.style.left = `${point.x + 300}px`;
+        textSpan.style.top = `${point.y + 280}px`;
+
+        textSpan.style.animationDelay = `${(i / numberOfPoints) * 1.5}s`;
+
+        container.appendChild(textSpan);
+    }
+</script>
+
+</body>
+</html>
